@@ -442,7 +442,7 @@ int rdbSave(char *filename) {
             sds keystr = dictGetEntryKey(de);
             robj key, *o = dictGetEntryVal(de);
             time_t expiretime;
-            
+
             initStaticStringObject(key,keystr);
             expiretime = getExpire(db,&key);
 

@@ -6,23 +6,23 @@
     </head>
     <body>
         <div id="page">
-        
+
             <div id='header'>
             <a href="index.html">
             <img style="border:none" alt="Redis Documentation" src="redis.png">
             </a>
             </div>
-        
+
             <div id="pagecontent">
                 <div class="index">
 <!-- This is a (PRE) block.  Make sure it's left aligned or your toc title will be off. -->
 <b>ConfigCommand: Contents</b><br>&nbsp;&nbsp;<a href="#CONFIG GET _pattern_ (Redis &gt;">CONFIG GET _pattern_ (Redis &gt;</a><br>&nbsp;&nbsp;<a href="#CONFIG SET _parameter_ _value_ (Redis &gt;">CONFIG SET _parameter_ _value_ (Redis &gt;</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#CONFIG GET _pattern_">CONFIG GET _pattern_</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#CONFIG SET _parameter_ _value_">CONFIG SET _parameter_ _value_</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Parameters value format">Parameters value format</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#See Also">See Also</a>
                 </div>
-                
+
                 <h1 class="wikiname">ConfigCommand</h1>
 
                 <div class="summary">
-                    
+
                 </div>
 
                 <div class="narrow">
@@ -53,7 +53,7 @@ $ redis-cli config get 'm*'
 <blockquote>The list of configuration parameters supported by CONFIG SET can beobtained issuing a <code name="code" class="python">CONFIG GET *</code> command.</blockquote>
 <blockquote>The configuration set using CONFIG SET is immediately loaded by the Redisserver that will start acting as specified starting from the next command.</blockquote>
 <blockquote>Example:</blockquote><pre class="codeblock python python" name="code">
-$ ./redis-cli 
+$ ./redis-cli
 redis&gt; set x 10
 OK
 redis&gt; config set maxmemory 200
@@ -68,7 +68,7 @@ OK
 <ul><li> The <code name="code" class="python">save</code> paramter is a list of space-separated integers. Every pair of integers specify the time and number of changes limit to trigger a save. For instance the command <code name="code" class="python">CONFIG SET save &quot;3600 10 60 10000&quot;</code> will configure the server to issue a background saving of the RDB file every 3600 seconds if there are at least 10 changes in the dataset, and every 60 seconds if there are at least 10000 changes. To completely disable automatic snapshots just set the parameter as an empty string.</li><li> All the integer parameters representing memory are returned and accepted only using bytes as unit.</li></ul>
 <h2><a name="See Also">See Also</a></h2>The <a href="InfoCommand.html">INFO</a> command can be used in order to read configuriaton parameters that are not available in the CONFIG command.
                 </div>
-        
+
             </div>
         </div>
     </body>

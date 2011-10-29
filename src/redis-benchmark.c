@@ -333,7 +333,7 @@ void parseOptions(int argc, char **argv) {
 
     for (i = 1; i < argc; i++) {
         int lastarg = i==argc-1;
-        
+
         if (!strcmp(argv[i],"-c") && !lastarg) {
             config.numclients = atoi(argv[i+1]);
             i++;

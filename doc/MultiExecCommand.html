@@ -6,23 +6,23 @@
     </head>
     <body>
         <div id="page">
-        
+
             <div id='header'>
             <a href="index.html">
             <img style="border:none" alt="Redis Documentation" src="redis.png">
             </a>
             </div>
-        
+
             <div id="pagecontent">
                 <div class="index">
 <!-- This is a (PRE) block.  Make sure it's left aligned or your toc title will be off. -->
 <b>MultiExecCommand: Contents</b><br>&nbsp;&nbsp;<a href="#WATCH key1 key2 ... keyN (Redis &gt;">WATCH key1 key2 ... keyN (Redis &gt;</a><br>&nbsp;&nbsp;<a href="#UNWATCH">UNWATCH</a><br>&nbsp;&nbsp;<a href="#MULTI">MULTI</a><br>&nbsp;&nbsp;<a href="#COMMAND_1 ...">COMMAND_1 ...</a><br>&nbsp;&nbsp;<a href="#COMMAND_2 ...">COMMAND_2 ...</a><br>&nbsp;&nbsp;<a href="#COMMAND_N ...">COMMAND_N ...</a><br>&nbsp;&nbsp;<a href="#EXEC or DISCARD">EXEC or DISCARD</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Usage">Usage</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#The DISCARD command">The DISCARD command</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Check and Set (CAS) transactions using WATCH">Check and Set (CAS) transactions using WATCH</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#WATCH explained">WATCH explained</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#WATCH used to implement ZPOP">WATCH used to implement ZPOP</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Return value">Return value</a>
                 </div>
-                
+
                 <h1 class="wikiname">MultiExecCommand</h1>
 
                 <div class="summary">
-                    
+
                 </div>
 
                 <div class="narrow">
@@ -65,7 +65,7 @@ Connected to localhost.
 Escape character is '^]'.
 MULTI
 +OK
-SET a 3 
+SET a 3
 abc
 +QUEUED
 LPOP a
@@ -158,7 +158,7 @@ If EXEC fails (returns a nil value) we just re-iterate the operation.<h2><a name
 The result of a MULTI/EXEC command is a multi bulk reply where every element is the return value of every command in the atomic transaction.
 </pre>If a MULTI/EXEC transaction is aborted because of WATCH detected modified keys, a <a href="ReplyTypes.html">Null Multi Bulk reply</a> is returned.
                 </div>
-        
+
             </div>
         </div>
     </body>

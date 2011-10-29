@@ -6,23 +6,23 @@
     </head>
     <body>
         <div id="page">
-        
+
             <div id='header'>
             <a href="index.html">
             <img style="border:none" alt="Redis Documentation" src="redis.png">
             </a>
             </div>
-        
+
             <div id="pagecontent">
                 <div class="index">
 <!-- This is a (PRE) block.  Make sure it's left aligned or your toc title will be off. -->
 <b>VirtualMemorySpecification: Contents</b><br>&nbsp;&nbsp;<a href="#Virtual Memory technical specification">Virtual Memory technical specification</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Keys vs Values: what is swapped out?">Keys vs Values: what is swapped out?</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#How does a swapped value looks like internally">How does a swapped value looks like internally</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#The Swap File">The Swap File</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Transfering objects from memory to swap">Transfering objects from memory to swap</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Loading objects back in memory">Loading objects back in memory</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#How blocking VM works">How blocking VM works</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Blocking VM swapping">Blocking VM swapping</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#What values to swap when we are out of memory?">What values to swap when we are out of memory?</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Blocking VM loading">Blocking VM loading</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Background saving when VM is active">Background saving when VM is active</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#The problem with the blocking VM">The problem with the blocking VM</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Threaded VM">Threaded VM</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#I/O Threads">I/O Threads</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Non blocking VM as probabilistic enhancement of blocking VM">Non blocking VM as probabilistic enhancement of blocking VM</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Blocking clients on swapped keys">Blocking clients on swapped keys</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Aborting I/O jobs">Aborting I/O jobs</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Questions?">Questions?</a>
                 </div>
-                
+
                 <h1 class="wikiname">VirtualMemorySpecification</h1>
 
                 <div class="summary">
-                    
+
                 </div>
 
                 <div class="narrow">
@@ -148,7 +148,7 @@ There is something hard to solve about the interactions between our blocking and
 This document is in no way complete, the only way to get the whole picture is reading the source code, but it should be a good introduction in order to make the code review / understanding a lot simpler.<br/><br/>Something is not clear about this page? Please leave a comment and I'll try to address the issue possibly integrating the answer in this document.
 
                 </div>
-        
+
             </div>
         </div>
     </body>

@@ -184,7 +184,7 @@ static unsigned int zipmapRawKeyLength(unsigned char *p) {
 static unsigned int zipmapRawValueLength(unsigned char *p) {
     unsigned int l = zipmapDecodeLength(p);
     unsigned int used;
-    
+
     used = zipmapEncodeLength(NULL,l);
     used += p[used] + 1 + l;
     return used;
@@ -212,7 +212,7 @@ unsigned char *zipmapSet(unsigned char *zm, unsigned char *key, unsigned int kle
     unsigned int freelen, reqlen = zipmapRequiredLength(klen,vlen);
     unsigned int empty, vempty;
     unsigned char *p;
-   
+
     freelen = reqlen;
     if (update) *update = 0;
     p = zipmapLookupRaw(zm,key,klen,&zmlen);

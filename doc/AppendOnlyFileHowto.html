@@ -6,23 +6,23 @@
     </head>
     <body>
         <div id="page">
-        
+
             <div id='header'>
             <a href="index.html">
             <img style="border:none" alt="Redis Documentation" src="redis.png">
             </a>
             </div>
-        
+
             <div id="pagecontent">
                 <div class="index">
 <!-- This is a (PRE) block.  Make sure it's left aligned or your toc title will be off. -->
 <b>AppendOnlyFileHowto: Contents</b><br>&nbsp;&nbsp;<a href="#Append Only File HOWTO">Append Only File HOWTO</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#General Information">General Information</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Log rewriting">Log rewriting</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Wait... but how does this work?">Wait... but how does this work?</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#How durable is the append only file?">How durable is the append only file?</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#What should I do if my Append Only File gets corrupted?">What should I do if my Append Only File gets corrupted?</a>
                 </div>
-                
+
                 <h1 class="wikiname">AppendOnlyFileHowto</h1>
 
                 <div class="summary">
-                    
+
                 </div>
 
                 <div class="narrow">
@@ -33,7 +33,7 @@ What is the solution? To use append only file as alternative to snapshotting. Ho
 <h2><a name="How durable is the append only file?">How durable is the append only file?</a></h2>Check redis.conf, you can configure how many times Redis will fsync() data on disk. There are three options:<br/><br/><ul><li> Fsync() every time a new command is appended to the append log file. Very very slow, very safe.</li><li> Fsync() one time every second. Fast enough, and you can lose 1 second of data if there is a disaster.</li><li> Never fsync(), just put your data in the hands of the Operating System. The faster and unsafer method.</li></ul>
 The suggested (and default) policy is &quot;everysec&quot;. It is both very fast and pretty safe. The &quot;always&quot; policy is very slow in practice, even if it was improved in Redis 2.0.0 there is no way to make fsync() faster than it is.<h2><a name="What should I do if my Append Only File gets corrupted?">What should I do if my Append Only File gets corrupted?</a></h2>It is possible that the server crashes while writing the AOF file (this still should never lead to inconsistencies) corrupting the file in a way that is no longer loadable by Redis. When this happens you can fix this problem using the following procedure:<br/><br/><ul><li> Make a backup copy of your AOF file.</li><li> Fix the original file with: ./redis-check-aof --fix <code name="code" class="python">&lt;filename&gt;</code></li><li> Optionally use diff -u to check what is the difference between two files.</li><li> Restart the server with the fixed file.</li></ul>
                 </div>
-        
+
             </div>
         </div>
     </body>
