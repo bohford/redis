@@ -6,23 +6,23 @@
     </head>
     <body>
         <div id="page">
-        
+
             <div id='header'>
             <a href="index.html">
             <img style="border:none" alt="Redis Documentation" src="redis.png">
             </a>
             </div>
-        
+
             <div id="pagecontent">
                 <div class="index">
 <!-- This is a (PRE) block.  Make sure it's left aligned or your toc title will be off. -->
 <b>PublishSubscribe: Contents</b><br>&nbsp;&nbsp;<a href="#UNSUBSCRIBE channel_1 channel_2 ... channel_N">UNSUBSCRIBE channel_1 channel_2 ... channel_N</a><br>&nbsp;&nbsp;<a href="#UNSUBSCRIBE (unsubscribe from all channels)">UNSUBSCRIBE (unsubscribe from all channels)</a><br>&nbsp;&nbsp;<a href="#PSUBSCRIBE pattern_1 pattern_2 ... pattern_N">PSUBSCRIBE pattern_1 pattern_2 ... pattern_N</a><br>&nbsp;&nbsp;<a href="#PUNSUBSCRIBE pattern_1 pattern_2 ... pattern_N">PUNSUBSCRIBE pattern_1 pattern_2 ... pattern_N</a><br>&nbsp;&nbsp;<a href="#PUNSUBSCRIBE (unsubscribe from all patterns)">PUNSUBSCRIBE (unsubscribe from all patterns)</a><br>&nbsp;&nbsp;<a href="#PUBLISH channel message">PUBLISH channel message</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Format of pushed messages">Format of pushed messages</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Unsubscribing from all the channels at once">Unsubscribing from all the channels at once</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Wire protocol example">Wire protocol example</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#PSUBSCRIBE and PUNSUBSCRIBE: pattern matching subscriptions">PSUBSCRIBE and PUNSUBSCRIBE: pattern matching subscriptions</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Messages matching both a pattern and a channel subscription">Messages matching both a pattern and a channel subscription</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#The meaning of the count of subscriptions with pattern matching">The meaning of the count of subscriptions with pattern matching</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#More details on the PUBLISH command">More details on the PUBLISH command</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Programming Example">Programming Example</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Client library implementations hints">Client library implementations hints</a>
                 </div>
-                
+
                 <h1 class="wikiname">PublishSubscribe</h1>
 
                 <div class="summary">
-                    
+
                 </div>
 
                 <div class="narrow">
@@ -107,7 +107,7 @@ Pieter Noordhuis provided a great example using Event-machine and Redis to creat
 <h2><a name="Client library implementations hints">Client library implementations hints</a></h2>
 Because all the messages received contain the original subscription causing the message delivery (the channel in the case of &quot;message&quot; type, and the original pattern in the case of &quot;pmessage&quot; type) clinet libraries may bind the original subscription to callbacks (that can be anonymous functions, blocks, function pointers, and so forth), using an hash table.<br/><br/>When a message is received an O(1) lookup can be done in order to deliver the message to the registered callback.
                 </div>
-        
+
             </div>
         </div>
     </body>

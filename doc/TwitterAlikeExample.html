@@ -6,23 +6,23 @@
     </head>
     <body>
         <div id="page">
-        
+
             <div id='header'>
             <a href="index.html">
             <img style="border:none" alt="Redis Documentation" src="redis.png">
             </a>
             </div>
-        
+
             <div id="pagecontent">
                 <div class="index">
 <!-- This is a (PRE) block.  Make sure it's left aligned or your toc title will be off. -->
 <b>TwitterAlikeExample: Contents</b><br>&nbsp;&nbsp;<a href="#A case study: Design and implementation of a simple Twitter clone using only the Redis key-value store as database and PHP">A case study: Design and implementation of a simple Twitter clone using only the Redis key-value store as database and PHP</a><br>&nbsp;&nbsp;<a href="#Key-value stores basics">Key-value stores basics</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Atomic operations">Atomic operations</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Beyond key-value stores">Beyond key-value stores</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#The set data type">The set data type</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Prerequisites">Prerequisites</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Data layout">Data layout</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Following, followers and updates">Following, followers and updates</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Authentication">Authentication</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Updates">Updates</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Paginating updates">Paginating updates</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Following users">Following users</a><br>&nbsp;&nbsp;<a href="#Making it horizontally scalable">Making it horizontally scalable</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Hashing the key">Hashing the key</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Special keys">Special keys</a>
                 </div>
-                
+
                 <h1 class="wikiname">TwitterAlikeExample</h1>
 
                 <div class="summary">
-                    
+
                 </div>
 
                 <div class="narrow">
@@ -242,7 +242,7 @@ The first thing to do is to hash the key and issue the request on different serv
 server_id = crc32(key) % number_of_servers
 </pre>This has a lot of problems since if you add one server you need to move too much keys and so on, but this is the general idea even if you use a better hashing scheme like consistent hashing.<br/><br/>Ok, are key accesses distributed among the key space? Well, all the user data will be partitioned among different servers. There are no inter-keys operations used (like SINTER, otherwise you need to care that things you want to intersect will end in the same server. <b>This is why Redis unlike memcached does not force a specific hashing scheme, it's application specific</b>). Btw there are keys that are accessed more frequently.<h3><a name="Special keys">Special keys</a></h3>For example every time we post a new message, we <b>need</b> to increment the <code name="code" class="python">global:nextPostId</code> key. How to fix this problem? A Single server will get a lot if increments. The simplest way to handle this is to have a dedicated server just for increments. This is probably an overkill btw unless you have really a lot of traffic. There is another trick. The ID does not really need to be an incremental number, but just <b>it needs to be unique</b>. So you can get a random string long enough to be unlikely (almost impossible, if it's md5-size) to collide, and you are done. We successfully eliminated our main problem to make it really horizontally scalable!<br/><br/>There is another one: global:timeline. There is no fix for this, if you need to take something in order you can split among different servers and <b>then merge</b> when you need to get the data back, or take it ordered and use a single key. Again if you really have so much posts per second, you can use a single server just for this. Remember that with commodity hardware Redis is able to handle 100000 writes for second, that's enough even for Twitter, I guess.<br/><br/>Please feel free to use the comments below for questions and feedbacks.
                 </div>
-        
+
             </div>
         </div>
     </body>

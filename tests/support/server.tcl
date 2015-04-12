@@ -150,10 +150,10 @@ proc start_server {options {code undefined}} {
             dict set config $directive $arguments
         }
     }
-    
+
     # use a different directory every time a server is started
     dict set config dir [tmpdir server]
-    
+
     # start every server on a different port
     dict set config port [incr ::port]
 
@@ -161,7 +161,7 @@ proc start_server {options {code undefined}} {
     foreach {directive arguments} [concat $::global_overrides $overrides] {
         dict set config $directive $arguments
     }
-    
+
     # write new configuration to temporary file
     set config_file [tmpfile redis.conf]
     set fp [open $config_file w+]
@@ -179,7 +179,7 @@ proc start_server {options {code undefined}} {
     } else {
         exec src/redis-server $config_file > $stdout 2> $stderr &
     }
-    
+
     # check that the server actually started
     # ugly but tries to be as fast as possible...
     set retrynum 20
@@ -211,7 +211,7 @@ proc start_server {options {code undefined}} {
     if {!$serverisup} {
         error_and_quit $config_file [exec cat $stderr]
     }
-    
+
     # find out the pid
     while {![info exists pid]} {
         regexp {^\[(\d+)\]} [exec head -n1 $stdout] _ pid

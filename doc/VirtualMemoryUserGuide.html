@@ -6,23 +6,23 @@
     </head>
     <body>
         <div id="page">
-        
+
             <div id='header'>
             <a href="index.html">
             <img style="border:none" alt="Redis Documentation" src="redis.png">
             </a>
             </div>
-        
+
             <div id="pagecontent">
                 <div class="index">
 <!-- This is a (PRE) block.  Make sure it's left aligned or your toc title will be off. -->
 <b>VirtualMemoryUserGuide: Contents</b><br>&nbsp;&nbsp;<a href="#Virtual Memory User Guide">Virtual Memory User Guide</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Virtual Memory explained in simple words">Virtual Memory explained in simple words</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#When using Virtual Memory is a good idea">When using Virtual Memory is a good idea</a><br>&nbsp;&nbsp;<a href="#VM Configuration">VM Configuration</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#The vm-max-memory setting">The vm-max-memory setting</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Configuring the swap file">Configuring the swap file</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Threaded VM vs Blocking VM">Threaded VM vs Blocking VM</a><br>&nbsp;&nbsp;<a href="#Random things to know">Random things to know</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#A good place for the swap file">A good place for the swap file</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Monitoring the VM">Monitoring the VM</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Redis with VM enabled: better .rdb files or Append Only File?">Redis with VM enabled: better .rdb files or Append Only File?</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Using as little memory as possible">Using as little memory as possible</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#VM Stability">VM Stability</a>
                 </div>
-                
+
                 <h1 class="wikiname">VirtualMemoryUserGuide</h1>
 
                 <div class="summary">
-                    
+
                 </div>
 
                 <div class="narrow">
@@ -42,23 +42,23 @@ vm-max-threads 4
 Not all the kind of file systems are able to deal with large files in a good way, especially Mac OS X file system tends to be really lame about it.<br/><br/>The suggestion is to use Linux ext3 file system, or any other file system with good support for <b>sparse files</b>. What are sparse files?<br/><br/>Sparse files are files where a lot of the content happen to be empty. Advanced file systems like ext2, ext3, ext4, RaiserFS, Raiser4, and many others, are able to encode this files in a more efficient way and will allocate more space for the file when needed, that is, when more actual blocks of the file will be used.<br/><br/>The swap file is obviously pretty sparse, especially if the server is running since little time or it is much bigger compared to the amount of data swapped out. A file system not supporting sparse files can at some point block the Redis process while creating a very big file at once.<br/><br/>For a list of file systems supporting spare files <a href="http://en.wikipedia.org/wiki/Comparison_of_file_systems" target="_blank">check this Wikipedia page comparing different files systems</a>.<h2><a name="Monitoring the VM">Monitoring the VM</a></h2>Once you have a Redis system with VM enabled up and running, you may be very interested in knowing how it's working: how many objects are swapped in total, the number of objects swapped and loaded every second, and so forth.<br/><br/>There is an utility that is very handy in checking how the VM is working, that is part of <a href="http://github.com/antirez/redis-tools" target="_blank">Redis Tools</a>. This tool is called redis-stat, and using it is pretty straightforward:<br/><br/><pre class="codeblock python python python" name="code">
 $ ./redis-stat vmstat
  --------------- objects --------------- ------ pages ------ ----- memory -----
- load-in  swap-out  swapped   delta      used     delta      used     delta    
- 138837   1078936   800402    +800402    807620   +807620    209.50M  +209.50M  
- 4277     38011     829802    +29400     837441   +29821     206.47M  -3.03M   
- 3347     39508     862619    +32817     870340   +32899     202.96M  -3.51M   
- 4445     36943     890646    +28027     897925   +27585     199.92M  -3.04M   
- 10391    16902     886783    -3863     894104   -3821     200.22M  +309.56K  
- 8888     19507     888371    +1588      895678   +1574      200.05M  -171.81K 
- 8377     20082     891664    +3293      899850   +4172      200.10M  +53.55K   
- 9671     20210     892586    +922       899917   +67        199.82M  -285.30K 
- 10861    16723     887638    -4948     895003   -4914     200.13M  +312.35K  
- 9541     21945     890618    +2980      898004   +3001      199.94M  -197.11K 
- 9689     17257     888345    -2273     896405   -1599     200.27M  +337.77K  
- 10087    18784     886771    -1574     894577   -1828     200.36M  +91.60K   
- 9330     19350     887411    +640       894817   +240       200.17M  -189.72K 
+ load-in  swap-out  swapped   delta      used     delta      used     delta
+ 138837   1078936   800402    +800402    807620   +807620    209.50M  +209.50M
+ 4277     38011     829802    +29400     837441   +29821     206.47M  -3.03M
+ 3347     39508     862619    +32817     870340   +32899     202.96M  -3.51M
+ 4445     36943     890646    +28027     897925   +27585     199.92M  -3.04M
+ 10391    16902     886783    -3863     894104   -3821     200.22M  +309.56K
+ 8888     19507     888371    +1588      895678   +1574      200.05M  -171.81K
+ 8377     20082     891664    +3293      899850   +4172      200.10M  +53.55K
+ 9671     20210     892586    +922       899917   +67        199.82M  -285.30K
+ 10861    16723     887638    -4948     895003   -4914     200.13M  +312.35K
+ 9541     21945     890618    +2980      898004   +3001      199.94M  -197.11K
+ 9689     17257     888345    -2273     896405   -1599     200.27M  +337.77K
+ 10087    18784     886771    -1574     894577   -1828     200.36M  +91.60K
+ 9330     19350     887411    +640       894817   +240       200.17M  -189.72K
 </pre>The above output is about a redis-server with VM enable, around 1 million of keys inside, and a lot of simulated load using the redis-load utility.<br/><br/>As you can see from the output a number of load-in and swap-out operations are happening every second. Note that the first line reports the actual values since the server was started, while the next lines are differences compared to the previous reading.<br/><br/>If you assigned enough memory to hold your working set of data, probably you should see a lot less dramatic swapping happening, so redis-stat can be a really valuable tool in order to understand if you need to shop for RAM ;)<h2><a name="Redis with VM enabled: better .rdb files or Append Only File?">Redis with VM enabled: better .rdb files or Append Only File?</a></h2>When VM is enabled, saving and loading the database are <b>much slower</b> operations. A DB that usually loads in 2 seconds takes 13 seconds with VM enabled if the server is configured to use the smallest memory possible (that is, vm-max-memory set to 0).<br/><br/>So you probably want to switch to a configuration using the Append Only File for persistence, so that you can perform the BGREWRITEAOF from time to time.<br/><br/>It is important to note that while a BGSAVE or BGREWRITEAOF is in progress Redis does <b>not</b> swap new values on disk. The VM will be read-only while there is another child accessing it. So if you have a lot of writes while there is a child working, the memory usage may grow.<h2><a name="Using as little memory as possible">Using as little memory as possible</a></h2>An interesting setup to turn Redis into an on-disk DB with just keys in memory is setting vm-max-memory to 0. If you don't mind some latency more and poorer performances but want to use very little memory for very big values, this is a good setup.<br/><br/>In this setup you should first try setting the VM as blocking (vm-max-threads 0) as with this configuration and high traffic the number of swap in and swap out operations will be huge, and threading will consume a lot of resources compared to a simple blocking implementation.<h2><a name="VM Stability">VM Stability</a></h2>VM is still experimental code, but in the latest weeks it was tested in many ways in development environments, and even in some production environment. No bugs were noticed during this testing period. Still the more obscure bugs may happen in non controlled environments where there are setups that we are not able to reproduce for some reason.<br/><br/>In this stage you are encouraged to try VM in your development environment, and even in production if your DB is not mission critical, but for instance just a big persistent cache of data that may go away without too much problems.<br/><br/>Please report any problem you will notice to the Redis Google Group or by IRC joining the #redis IRC channel on freenode.
                 </div>
-        
+
             </div>
         </div>
     </body>

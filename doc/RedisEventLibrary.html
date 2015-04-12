@@ -6,32 +6,32 @@
     </head>
     <body>
         <div id="page">
-        
+
             <div id='header'>
             <a href="index.html">
             <img style="border:none" alt="Redis Documentation" src="redis.png">
             </a>
             </div>
-        
+
             <div id="pagecontent">
                 <div class="index">
 <!-- This is a (PRE) block.  Make sure it's left aligned or your toc title will be off. -->
 <b>RedisEventLibrary: Contents</b><br>&nbsp;&nbsp;<a href="#Redis Event Library">Redis Event Library</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Event Loop Initialization">Event Loop Initialization</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#aeCreateEventLoop">aeCreateEventLoop</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#aeCreateTimeEvent">aeCreateTimeEvent</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#aeCreateFileEvent">aeCreateFileEvent</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Event Loop Processing">Event Loop Processing</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#aeProcessEvents">aeProcessEvents</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#processTimeEvents">processTimeEvents</a>
                 </div>
-                
+
                 <h1 class="wikiname">RedisEventLibrary</h1>
 
                 <div class="summary">
-                    
+
                 </div>
 
                 <div class="narrow">
                     &iuml;&raquo;&iquest;#sidebar <a href="RedisInternals.html">RedisInternals</a><h1><a name="Redis Event Library">Redis Event Library</a></h1>Redis implements its own event library. The event library is implemented in <b>ae.c</b>.<br/><br/>The best way to understand how the Redis event library works is to understand how Redis uses it.<h2><a name="Event Loop Initialization">Event Loop Initialization</a></h2>
-<code name="code" class="python">initServer</code> function defined in <b>redis.c</b> initializes the numerous fields of the <code name="code" class="python">redisServer</code> structure variable. One such field is the Redis event loop <code name="code" class="python">el</code>:<br/><br/><pre class="codeblock python" name="code"> 
-aeEventLoop *el 
+<code name="code" class="python">initServer</code> function defined in <b>redis.c</b> initializes the numerous fields of the <code name="code" class="python">redisServer</code> structure variable. One such field is the Redis event loop <code name="code" class="python">el</code>:<br/><br/><pre class="codeblock python" name="code">
+aeEventLoop *el
 </pre><code name="code" class="python">initServer</code> initializes <code name="code" class="python">server.el</code> field by calling <code name="code" class="python">aeCreateEventLoop</code> defined in <b>ae.c</b>. The definition of <code name="code" class="python">aeEventLoop</code> is below:
 <pre class="codeblock python python" name="code">
-typedef struct aeEventLoop 
+typedef struct aeEventLoop
 {
     int maxfd;
     long long timeEventNextId;
@@ -62,7 +62,7 @@ This completes the initialization of Redis event loop.<h2><a name="Event Loop Pr
 </pre><code name="code" class="python">c</code> is the <code name="code" class="python">redisClient</code> structure variable and <code name="code" class="python">c-&gt;fd</code> is the connected descriptor.<br/><br/>Next the <code name="code" class="python">ae.c:aeProcessEvent</code> calls <code name="code" class="python">ae.c:processTimeEvents</code><h3><a name="processTimeEvents">processTimeEvents</a></h3><code name="code" class="python">ae.processTimeEvents</code> iterates over list of time events starting at <code name="code" class="python">eventLoop-&gt;timeEventHead</code>.<br/><br/>For every timed event that has elapsed <code name="code" class="python">processTimeEvents</code> calls the registered callback. In this case it calls the only timed event callback registered, that is, <code name="code" class="python">redis.c:serverCron</code>. The callback returns the time in milliseconds after which the callback must be called again. This change is recorded via a call to <code name="code" class="python">ae.c:aeAddMilliSeconds</code> and will be handled on the next iteration of <code name="code" class="python">ae.c:aeMain</code> while loop.<br/><br/>That's all.
 
                 </div>
-        
+
             </div>
         </div>
     </body>
